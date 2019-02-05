@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Feedback</title>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="http://assets.freshdesk.com/widget/freshwidget.js"></script>
+    <script src="&#10;https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    
+</head>
+<body>
+	<div class="container">
+	 <!-- Trigger/Open The Modal -->
+	<button id="myBtn" class="feedback-button">Open</button>
+
+
+	<!-- The Modal -->
+	<div id="myModal" class="modal">
+
+	  <!-- Modal content -->
+	  <div class="modal-content">
+	    <span class="close">&times;</span><br>
+	    <input type="text" name="api" id="api" placeholder="Enter API"><br>
+	    <!-- <input type="text" name="Ticket" id="Ticket" placeholder="Enter Ticket number"><br> -->
+	    <input type="text" name="domain" id="domain" placeholder="Enter Domain"><br>
+	    <button id="authorize">Authorize</button>
+	  </div>
+
+	</div>
+
+
+    
+
+
+	<script type="text/javascript">
+
+		// Get the modal
+		var modal = document.getElementById('myModal');
+
+		// Get the button that opens the modal
+		var btn = document.getElementById("myBtn");
+
+		// Get the <span> element that closes the modal
+		var span = document.getElementsByClassName("close")[0];
+
+		// When the user clicks on the button, open the modal 
+		btn.onclick = function() {
+		  modal.style.display = "block";
+		}
+
+		// When the user clicks on <span> (x), close the modal
+		span.onclick = function() {
+		  modal.style.display = "none";
+		}
+
+		// When the user clicks anywhere outside of the modal, close it
+		window.onclick = function(event) {
+		  if (event.target == modal) {
+		    modal.style.display = "none";
+		  }
+		}
+
+		$('#authorize').click(function(){
+			var api=$('#api').val();
+			var domain=$('#domain').val();
+
+ 			var validedata={'api':api,'domain':domain};
+
+            $.ajax({
+            	type:'GET',
+            	url:'/validate',
+            	datatype:'JSON',
+            	data:validedata,
+            	success: function (data) {
+			        alert(data);
+			        location.reload(true);   
+			    },
+            })
+		});
+	</script>
+
+	<style type="text/css">
+		/* The Modal (background) */
+		#api{
+			margin-top: 2rem;
+			margin-left: 1rem;
+		}
+		#domain{
+			margin-top: 2rem;
+		}
+
+		.feedback-button {
+		  height: 40px;
+		  border: solid 3px #CCCCCC;
+		  background: #333;
+		  width: 100px;
+		  line-height: 32px;
+		  -webkit-transform: rotate(-90deg);
+		  font-weight: 600;
+		  color: white;
+		  transform: rotate(-90deg);
+		  -ms-transform: rotate(-90deg);
+		  -moz-transform: rotate(-90deg);
+		  text-align: center;
+		  font-size: 17px;
+		  position: fixed;
+		  float: right;
+		  margin-left: -2.2rem;
+		  font-family: "Roboto", helvetica, arial, sans-serif;
+		  z-index: 999;
+		}
+
+		#authorize{
+			background-color: lightblue;
+			margin-top: 2rem;
+			width: 30%;
+			height: 15%;
+		}
+		.modal {
+		  display: none; /* Hidden by default */
+		  position: fixed; /* Stay in place */
+		  z-index: 1; /* Sit on top */
+		  left: 0;
+		  top: 0;
+		  width: 100%; /* Full width */
+		  height: 100%; /* Full height */
+		  text-align: center;
+		  overflow: auto; /* Enable scroll if needed */
+		  background-color: rgb(0,0,0); /* Fallback color */
+		  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+		}
+
+		/* Modal Content/Box */
+		.modal-content {
+		  background-color: #fefefe;
+		  margin: 15% auto; /* 15% from the top and centered */
+		  padding: 20px;
+		  border: 1px solid #888;
+		  width: 40%; /* Could be more or less, depending on screen size */
+		  height: 40%;
+		}
+
+		/* The Close Button */
+		.close {
+		  color: #aaa;
+		  float: right;
+		  font-size: 28px;
+		  font-weight: bold;
+		}
+
+		.close:hover,
+		.close:focus {
+		  color: black;
+		  text-decoration: none;
+		  cursor: pointer;
+		}
+	</style>
+</body>
+</html>
